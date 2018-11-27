@@ -19,9 +19,9 @@ extern unsigned long colors[256];
 main(int argc, char *argv[])
 {
     Display *dis;
-    Window win;			/* Наше окно */
-    XEvent event;		/* События */
-    GC gc;			/* Графический контекст */
+    Window win;			/* п²п╟я┬п╣ п╬п╨п╫п╬ */
+    XEvent event;		/* п║п╬п╠я▀я┌п╦я▐ */
+    GC gc;			/* п⌠я─п╟я└п╦я┤п╣я│п╨п╦п╧ п╨п╬п╫я┌п╣п╨я│я┌ */
     XSetWindowAttributes SetWinAttr;
     XImage *image, *newimage, *shape;
     XpmAttributes xpm;
@@ -108,7 +108,7 @@ main(int argc, char *argv[])
 	printf("Pixmap open success\n");
 #endif
 
-    init_timer(0, 10000);	/* 10000 микросекунд */
+    init_timer(0, 10000);	/* 10000 п╪п╦п╨я─п╬я│п╣п╨я┐п╫п╢ */
     newimage = ScaleImage(dis, image, x, y);
 
 
@@ -145,7 +145,7 @@ main(int argc, char *argv[])
 
 	    case ButtonPress:
 #if 1
-		if (event.xbutton.button == 0x4) {	/* Меньше */
+		if (event.xbutton.button == 0x4) {	/* п°п╣п╫я▄я┬п╣ */
 		    if ((x <= 1) || (y <= 1))
 			break;
 		    XClearArea(dis, win, 20, 20, newimage->width,
@@ -155,10 +155,10 @@ main(int argc, char *argv[])
 		    newimage = ScaleImage(dis, image, x, y);
 		    printf("Resampling for %ld milliseconds\n",
 			   TimerCount - now1);
-		    printf("Меньше: x = %d y = %d\n", x, y);
+		    printf("п°п╣п╫я▄я┬п╣: x = %d y = %d\n", x, y);
 		}
 
-		if (event.xbutton.button == 0x5) {	/* Больше */
+		if (event.xbutton.button == 0x5) {	/* п▒п╬п╩я▄я┬п╣ */
 		    if ((x >= 250) || (y >= 250))
 			break;
 		    XClearArea(dis, win, 20, 20, newimage->width,
@@ -168,7 +168,7 @@ main(int argc, char *argv[])
 		    newimage = ScaleImage(dis, image, x, y);
 		    printf("Resampling for %ld milliseconds\n",
 			   TimerCount - now1);
-		    printf("Больше: x = %d y = %d\n", x, y);
+		    printf("п▒п╬п╩я▄я┬п╣: x = %d y = %d\n", x, y);
 		}
 #endif
 		break;
