@@ -14,17 +14,17 @@
 
 void PrintImageData(XImage * image)
 {
-    printf("Ширина (width):   \t\t%d\n"
-	   "Высота (height):  \t\t%d\n"
-	   "Смещение по X (xoffset): \t%d\n"
-	   "Формат (format):  \t\t%s\n"
-	   "Порядок байт (byte_order): \t%s\n"
-	   "Cканлиний (bitmap_unit): \t%d\n"
-	   "Порядок бит (bitmap_bit_order): %s\n"
-	   "Выравние (bitmap_pad): \t\t%d\n"
-	   "Глубина (depth): \t\t%d\n"
+    printf("п╗п╦я─п╦п╫п╟ (width):   \t\t%d\n"
+	   "п▓я▀я│п╬я┌п╟ (height):  \t\t%d\n"
+	   "п║п╪п╣я┴п╣п╫п╦п╣ п©п╬ X (xoffset): \t%d\n"
+	   "п╓п╬я─п╪п╟я┌ (format):  \t\t%s\n"
+	   "п÷п╬я─я▐п╢п╬п╨ п╠п╟п╧я┌ (byte_order): \t%s\n"
+	   "Cп╨п╟п╫п╩п╦п╫п╦п╧ (bitmap_unit): \t%d\n"
+	   "п÷п╬я─я▐п╢п╬п╨ п╠п╦я┌ (bitmap_bit_order): %s\n"
+	   "п▓я▀я─п╟п╡п╫п╦п╣ (bitmap_pad): \t\t%d\n"
+	   "п⌠п╩я┐п╠п╦п╫п╟ (depth): \t\t%d\n"
 	   "bytes_per_line:  accelarator to next line %d\n"
-	   "Бит в пикселе (bits_per_pixel): %d\n"
+	   "п▒п╦я┌ п╡ п©п╦п╨я│п╣п╩п╣ (bits_per_pixel): %d\n"
 	   "red_mask:    %d\n"
 	   "green_mask:  %d\n"
 	   "blue_mask:   %d\n",
@@ -41,12 +41,12 @@ void PrintImageData(XImage * image)
 }
 
 
-/* Поворачивает на 90 градусов */
+/* п÷п╬п╡п╬я─п╟я┤п╦п╡п╟п╣я┌ п╫п╟ 90 пЁя─п╟п╢я┐я│п╬п╡ */
 XImage *RotateImage(Display * dis, XImage * src)
 {
     XImage *image;
     int depth, screen, numNewBufBytes;
-    unsigned char *data;	/* Буфер для рисунка */
+    unsigned char *data;	/* п▒я┐я└п╣я─ п╢п╩я▐ я─п╦я│я┐п╫п╨п╟ */
     int numNewBytes, bpp;
     Visual *vis;
     int x, y, i, j;
@@ -75,7 +75,7 @@ XImage *RotateImage(Display * dis, XImage * src)
 			 bpp * src->height);
     XInitImage(image);
 
-    /* Почти транспонирование */
+    /* п÷п╬я┤я┌п╦ я┌я─п╟п╫я│п©п╬п╫п╦я─п╬п╡п╟п╫п╦п╣ */
     for (i = 0; i < src->width; i++) {
 	for (j = 0; j < src->height; j++) {
 	    pixel = src->f.get_pixel(src, src->width - i, j);
@@ -86,12 +86,12 @@ XImage *RotateImage(Display * dis, XImage * src)
 }
 
 
-/* Функция делает из цветной картинки черно-белую */
+/* п╓я┐п╫п╨я├п╦я▐ п╢п╣п╩п╟п╣я┌ п╦п╥ я├п╡п╣я┌п╫п╬п╧ п╨п╟я─я┌п╦п╫п╨п╦ я┤п╣я─п╫п╬-п╠п╣п╩я┐я▌ */
 void ColorToBWImage(XImage * image)
 {
     unsigned char r, g, b;
     unsigned long pixel;
-    unsigned long mid;		/* Здесь сохраним значение пикселя  */
+    unsigned long mid;		/* п≈п╢п╣я│я▄ я│п╬я┘я─п╟п╫п╦п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╦п╨я│п╣п╩я▐  */
     int x, y, i, j;
 
 
@@ -99,43 +99,43 @@ void ColorToBWImage(XImage * image)
 	for (j = 0; j < image->height; j++) {
 	    pixel = XGetPixel(image, i, j);
 	    /* 
-	     * Усредним все цвета для получения черно-белого рисунка 
+	     * пёя│я─п╣п╢п╫п╦п╪ п╡я│п╣ я├п╡п╣я┌п╟ п╢п╩я▐ п©п╬п╩я┐я┤п╣п╫п╦я▐ я┤п╣я─п╫п╬-п╠п╣п╩п╬пЁп╬ я─п╦я│я┐п╫п╨п╟ 
 	     */
 
 	    if (image->depth == 8) {
-		/* Выделим красный */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╨я─п╟я│п╫я▀п╧ */
 		r = (pixel >> 5) & 0x3;
-		/* Выделим зеленый */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╥п╣п╩п╣п╫я▀п╧ */
 
 		g = (pixel >> 2) & 0x7;
 
-		/* Выделим синий */
+		/* п▓я▀п╢п╣п╩п╦п╪ я│п╦п╫п╦п╧ */
 		b = pixel & 0x03;
 
 		pixel = (r + b + g) / 3;
 		pixel = (pixel << 5) | (pixel << 2) | (pixel);
 
 	    } else if (image->depth == 15) {
-		/* Выделим красный */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╨я─п╟я│п╫я▀п╧ */
 		r = (pixel) >> 10;
-		/* Выделим зеленый */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╥п╣п╩п╣п╫я▀п╧ */
 
 		g = (pixel >> 5) & 0x01f;
 
-		/* Выделим синий */
+		/* п▓я▀п╢п╣п╩п╦п╪ я│п╦п╫п╦п╧ */
 		b = pixel & 0x01f;
 
 		pixel = (r + b + g) / 3;
 		pixel = (pixel << 10) | (pixel << 5) | (pixel);
 
 	    } else if (image->depth == 16) {
-		/* Выделим красный */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╨я─п╟я│п╫я▀п╧ */
 		r = (pixel) >> 11;
-		/* Выделим зеленый */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╥п╣п╩п╣п╫я▀п╧ */
 
 		g = (pixel >> 5) & 0x03f;
 
-		/* Выделим синий */
+		/* п▓я▀п╢п╣п╩п╦п╪ я│п╦п╫п╦п╧ */
 		b = pixel & 0x01f;
 
 		
@@ -145,12 +145,12 @@ void ColorToBWImage(XImage * image)
 	    }
 
 	    if (image->depth >= 24) {
-		/* Выделим красный */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╨я─п╟я│п╫я▀п╧ */
 		r = (pixel) >> 16;
-		/* Выделим зеленый */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╥п╣п╩п╣п╫я▀п╧ */
 
 		g = (pixel & 0x0ff00) >> 8;
-		/* Выделим синий */
+		/* п▓я▀п╢п╣п╩п╦п╪ я│п╦п╫п╦п╧ */
 		b = pixel & 0x0ff;
 
 		pixel = (r + b + g) / 3;
@@ -163,12 +163,12 @@ void ColorToBWImage(XImage * image)
 }
 
 
-/* Функция делает негатив */
+/* п╓я┐п╫п╨я├п╦я▐ п╢п╣п╩п╟п╣я┌ п╫п╣пЁп╟я┌п╦п╡ */
 void InvertImage(XImage * image)
 {
     unsigned long r, g, b;
     unsigned long pixel;
-    unsigned long mid;		/* Здесь сохраним значение пикселя  */
+    unsigned long mid;		/* п≈п╢п╣я│я▄ я│п╬я┘я─п╟п╫п╦п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╦п╨я│п╣п╩я▐  */
     int x, y, i, j;
 
     for (i = 0; i < image->width; i++) {
@@ -176,57 +176,57 @@ void InvertImage(XImage * image)
 	    pixel = XGetPixel(image, i, j);
 
 	    /* 
-	     * Выделим компоненты
+	     * п▓я▀п╢п╣п╩п╦п╪ п╨п╬п╪п©п╬п╫п╣п╫я┌я▀
 	     */
 	    if (image->depth == 8) {
-		/* Выделим красный */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╨я─п╟я│п╫я▀п╧ */
 		r = (pixel >> 5) & 0x3;
 
-		/* Выделим зеленый */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╥п╣п╩п╣п╫я▀п╧ */
 		g = (pixel >> 2) & 0x7;
 
-		/* Выделим синий */
+		/* п▓я▀п╢п╣п╩п╦п╪ я│п╦п╫п╦п╧ */
 		b = pixel & 0x03;
 		pixel = (r << 5) | (g << 2) | (b);
 	    } else if (image->depth == 15) {
-		/* Выделим красный */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╨я─п╟я│п╫я▀п╧ */
 		r = (pixel) >> 10;
 		r = 31 - r;
 
-		/* Выделим зеленый */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╥п╣п╩п╣п╫я▀п╧ */
 		g = (pixel >> 5) & 0x01f;
 		g = 31 - g;
 
-		/* Выделим синий */
+		/* п▓я▀п╢п╣п╩п╦п╪ я│п╦п╫п╦п╧ */
 		b = pixel & 0x01f;
 		b = 31 - b;
 
 		pixel = (r << 10) | (g << 5) | (b);
 
 	    } else if (image->depth == 16) {
-		/* Выделим красный */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╨я─п╟я│п╫я▀п╧ */
 		r = (pixel) >> 11;
 		r = 31 - r;
 
-		/* Выделим зеленый */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╥п╣п╩п╣п╫я▀п╧ */
 		g = (pixel >> 5) & 0x03f;
 		g = 63 - g;
 
-		/* Выделим синий */
+		/* п▓я▀п╢п╣п╩п╦п╪ я│п╦п╫п╦п╧ */
 		b = pixel & 0x01f;
 		b = 32 - b;
 
 		pixel = (r << 11) | (g << 5) | (b);
 	    } else if (image->depth >= 24) {
-		/* Выделим красный */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╨я─п╟я│п╫я▀п╧ */
 		r = (pixel) >> 16;
 		r = 255 - r;
 
-		/* Выделим зеленый */
+		/* п▓я▀п╢п╣п╩п╦п╪ п╥п╣п╩п╣п╫я▀п╧ */
 		g = (pixel & 0x0ff00) >> 8;
 		g = 255 - g;
 
-		/* Выделим синий */
+		/* п▓я▀п╢п╣п╩п╦п╪ я│п╦п╫п╦п╧ */
 		b = pixel & 0x0ff;
 		b = 255 - b;
 
@@ -238,7 +238,7 @@ void InvertImage(XImage * image)
     }
 }
 
-/* Отмасштабировать изображение на x_percent и y_percent */
+/* п·я┌п╪п╟я│я┬я┌п╟п╠п╦я─п╬п╡п╟я┌я▄ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╣ п╫п╟ x_percent п╦ y_percent */
 XImage *ScaleImage(Display * dis, XImage * src, int x_percent, int y_percent)
 {
     XImage *image;
@@ -247,10 +247,10 @@ XImage *ScaleImage(Display * dis, XImage * src, int x_percent, int y_percent)
     double x_scale, y_scale;
     int i = 0, j = 0, n, m;
     double x = 0, y = 0;
-    unsigned char *buf;		/* Буфер для рисунка */
+    unsigned char *buf;		/* п▒я┐я└п╣я─ п╢п╩я▐ я─п╦я│я┐п╫п╨п╟ */
     int new_width, new_height;
-    unsigned long pix_0, pix_1, pixel, pix_r, pix_g, pix_b;	/* Компоненты пикселя */
-    unsigned char r0, r1, g0, g1, b0, b1;	/* Компоненты пикселя */
+    unsigned long pix_0, pix_1, pixel, pix_r, pix_g, pix_b;	/* п п╬п╪п©п╬п╫п╣п╫я┌я▀ п©п╦п╨я│п╣п╩я▐ */
+    unsigned char r0, r1, g0, g1, b0, b1;	/* п п╬п╪п©п╬п╫п╣п╫я┌я▀ п©п╦п╨я│п╣п╩я▐ */
 
 
     x_scale = x_percent / 100.0;
@@ -287,7 +287,7 @@ void jpeg_error_exit(j_common_ptr cinfo)
     exit(EXIT_FAILURE);
 }
 
-/* Возвращает массив в 24 битной image.*/
+/* п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ п╪п╟я│я│п╦п╡ п╡ 24 п╠п╦я┌п╫п╬п╧ image.*/
 unsigned char *decode_jpeg(char *filename, int *widthPtr, int *heightPtr)
 {
     register JSAMPARRAY lineBuf;
